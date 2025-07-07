@@ -1,11 +1,12 @@
-import Header from "@/components/Header"
-
-export default function RegularLayout({ children }: { children: React.ReactNode }) {
+export default function RegularLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
-        <Header/>
-        <main>{children}</main>
+       <main className="">{children}</main>
       </body>
     </html>
   );

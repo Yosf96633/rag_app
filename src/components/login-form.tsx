@@ -82,6 +82,7 @@ export function LoginForm({
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    placeholder="••••••••"
                     className="pr-10"
                   />
                   <button

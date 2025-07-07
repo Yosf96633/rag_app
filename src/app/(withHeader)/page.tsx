@@ -1,11 +1,22 @@
-import React from 'react'
+"use client";
 
-const page = () => {
+import { useState } from "react";
+import Header from "@/components/Header";
+import { ChatForm } from "@/components/chat-interface";
+
+export default function HomePage() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+   
   return (
-    <div>
-         <h1 className=' text-4xl font-bold text-center py-6'>Chat interface will be here</h1>
+    <div className=" flex flex-col h-svh antialiased">
+      <div className="flex-1 min-h-0">
+        <Header onToggleSidebar={handleToggleSidebar} />
+          <ChatForm />
+      </div>
     </div>
-  )
+  );
 }
-
-export default page

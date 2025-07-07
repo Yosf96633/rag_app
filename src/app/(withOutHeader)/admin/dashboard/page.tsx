@@ -35,17 +35,37 @@ export default function Page() {
     setSelectedAt(new Date())
   }
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
+ const handleSubmit = async (event: React.FormEvent) => {
+  event.preventDefault()
 
-    if (!pdf) {
-      setError('Please select a PDF file before submitting.')
-      return
-    }
-
-    // 🔁 Here you can upload or generate embeddings
-    console.log('File ready to process:', pdf)
+  if (!pdf) {
+    setError('Please select a PDF file before submitting.')
+    return
   }
+
+  const formData = new FormData()
+  formData.append("file", pdf)
+
+  try {
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      setError(data.error || "Something went wrong during upload.")
+    } else {
+      console.log("✅ Upload success:", data)
+      alert("Embedding stored successfully: " + data.count + " chunks")
+    }
+  } catch (err) {
+    console.error(err)
+    setError("Upload failed. Please try again.")
+  }
+}
+
 
   const formatBytes = (bytes: number) => {
     const units = ['Bytes', 'KB', 'MB', 'GB']
@@ -56,7 +76,7 @@ export default function Page() {
     }
     return `${bytes.toFixed(1)} ${units[i]}`
   }
-
+ 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Card>
